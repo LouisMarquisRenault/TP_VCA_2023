@@ -1,0 +1,82 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+  message VehicleInfo_01 VehicleInfo_01;
+  msTimer send_VehicleInfoFrame_01; 
+  message VehicleInfo_02 VehicleInfo_02;
+  msTimer send_VehicleInfoFrame_02; 
+  message IVIInfo_01 IVIInfo_01;
+  msTimer send_IVIInfo_01; 
+}
+
+on start{
+  VehicleInfo_01.can = 2;
+  VehicleInfo_01.dir = 1;
+  VehicleInfo_01.rtr = 0;
+  setTimerCyclic(send_VehicleInfoFrame_01,50);
+  
+  VehicleInfo_02.can = 2;
+  VehicleInfo_02.dir = 1;
+  VehicleInfo_02.rtr = 0;
+  setTimerCyclic(send_VehicleInfoFrame_02,200);
+  
+  IVIInfo_01.can = 2;
+  IVIInfo_01.dir = 1;
+  IVIInfo_01.rtr = 0;
+  setTimerCyclic(send_IVIInfo_01,500);
+}
+
+
+//VehicleInfo_01
+on signal CAN2::CGW::VehicleInfo_01::IVehicleState{
+  VehicleInfo_01.IVehicleState = this;
+}
+
+on signal CAN2::CGW::VehicleInfo_01::IEngineON {
+  VehicleInfo_01.IEngineON = this;
+}
+
+on signal CAN2::CGW::VehicleInfo_01::IVehicleSpeed {
+  VehicleInfo_01.IVehicleSpeed = this;
+}
+
+
+//VehicleInfo_02
+on signal CAN2::CGW::VehicleInfo_02::IDriverDoorState {
+  VehicleInfo_02.IDriverDoorState = this;
+}
+
+on signal CAN2::CGW::VehicleInfo_02::IPassengerDoorState {
+  VehicleInfo_02.IPassengerDoorState = this;
+}
+
+on signal CAN2::CGW::VehicleInfo_02::IRearRightDoorState {
+  VehicleInfo_02.IRearRightDoorState = this;
+}
+
+on signal CAN2::CGW::VehicleInfo_02::IRearLeftDoorState {
+  VehicleInfo_02.IRearLeftDoorState = this;
+}
+
+//IVIInfo_01
+on signal CAN2::CGW::IVIInfo_01::IOSE_Activation_Switch {
+  IVIInfo_01.IOSE_Activation_Switch = this;
+}
+
+
+on timer send_VehicleInfoFrame_01{
+  output(VehicleInfo_01);
+}
+
+on timer send_VehicleInfoFrame_02{
+  output(VehicleInfo_02);
+}
+
+on timer send_IVIInfo_01{
+  output(IVIInfo_01);
+}

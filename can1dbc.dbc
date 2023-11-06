@@ -1,0 +1,120 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: CGW RLRS RRRS ADAS
+VAL_TABLE_ Door_State 1 "Open" 0 "Closed" ;
+VAL_TABLE_ Switch_Value 1 "Activated" 0 "Not Activated" ;
+VAL_TABLE_ Lock 1 "Locked" 0 "Not Locked" ;
+VAL_TABLE_ Alert 1 "Alert" 0 "No Alert" ;
+VAL_TABLE_ Target 1 "Target Detected" 0 "Target Not Detected" ;
+VAL_TABLE_ OSE_Activation_State 1 "Activated" 0 "Not_Activated" ;
+VAL_TABLE_ Activation_Switch 1 "Activated" 0 "Not_Activated" ;
+VAL_TABLE_ VehicleStateValues 3 "Unavailable" 2 "Powertrain Running" 1 "ContactON" 0 "Sleeping" ;
+VAL_TABLE_ EngineStatus 1 "EngineON" 0 "EngineOFF" ;
+
+
+BO_ 6 OSE_01: 8 ADAS
+ SG_ IRight_Alert : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ILeft_Alert : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ILockRightSide : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ILockLeftSide : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ IOSE_ActivationState : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 5 IVIInfo_01: 8 CGW
+ SG_ IOSE_Activation_Switch : 0|8@1- (1,0) [0|255] "" Vector__XXX
+
+BO_ 4 VehicleInfo_02: 8 CGW
+ SG_ IRearRightDoorState : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ IRearLeftDoorState : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ IPassengerDoorState : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ IDriverDoorState : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 3 VehicleInfo_01: 8 CGW
+ SG_ IEngineON : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ IVehicleSpeed : 16|16@1+ (1,0) [0|65535] "kph" Vector__XXX
+ SG_ IVehicleState : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 2 ALERT_01: 8 ADAS
+
+BO_ 1 RLRS_01: 8 RLRS
+ SG_ ITargetDetected_Left : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 0 RRRS_01: 8 RRRS
+ SG_ ITargetDetected_Right : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+
+
+BA_DEF_  "MultiplexExtEnabled" ENUM  "No","Yes";
+BA_DEF_ BO_  "CANFD_BRS" ENUM  "0","1";
+BA_DEF_  "DBName" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_ BU_  "NodeLayerModules" STRING ;
+BA_DEF_ BU_  "ECU" STRING ;
+BA_DEF_ BU_  "CANoeJitterMax" INT 0 0;
+BA_DEF_ BU_  "CANoeJitterMin" INT 0 0;
+BA_DEF_ BU_  "CANoeDrift" INT 0 0;
+BA_DEF_ BU_  "CANoeStartDelay" INT 0 0;
+BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","StandardCAN_FD","ExtendedCAN_FD";
+BA_DEF_DEF_  "MultiplexExtEnabled" "No";
+BA_DEF_DEF_  "CANFD_BRS" "1";
+BA_DEF_DEF_  "DBName" "";
+BA_DEF_DEF_  "BusType" "";
+BA_DEF_DEF_  "NodeLayerModules" "";
+BA_DEF_DEF_  "ECU" "";
+BA_DEF_DEF_  "CANoeJitterMax" 0;
+BA_DEF_DEF_  "CANoeJitterMin" 0;
+BA_DEF_DEF_  "CANoeDrift" 0;
+BA_DEF_DEF_  "CANoeStartDelay" 0;
+BA_DEF_DEF_  "VFrameFormat" "StandardCAN";
+BA_ "BusType" "CAN FD";
+BA_ "DBName" "can1dbc";
+BA_ "VFrameFormat" BO_ 2 0;
+BA_ "VFrameFormat" BO_ 1 0;
+BA_ "VFrameFormat" BO_ 0 0;
+VAL_ 6 IRight_Alert 1 "Alert" 0 "No Alert" ;
+VAL_ 6 ILeft_Alert 1 "Alert" 0 "No Alert" ;
+VAL_ 6 ILockRightSide 1 "Locked" 0 "Not Locked" ;
+VAL_ 6 ILockLeftSide 1 "Locked" 0 "Not Locked" ;
+VAL_ 6 IOSE_ActivationState 1 "Activated" 0 "Not_Activated" ;
+VAL_ 5 IOSE_Activation_Switch 1 "Activated" 0 "Not_Activated" ;
+VAL_ 4 IRearRightDoorState 1 "Open" 0 "Closed" ;
+VAL_ 4 IRearLeftDoorState 1 "Open" 0 "Closed" ;
+VAL_ 4 IPassengerDoorState 1 "Open" 0 "Closed" ;
+VAL_ 4 IDriverDoorState 1 "Open" 0 "Closed" ;
+VAL_ 3 IEngineON 1 "EngineON" 0 "EngineOFF" ;
+VAL_ 3 IVehicleState 3 "Unavailable" 2 "Powertrain Running" 1 "ContactON" 0 "Sleeping" ;
+VAL_ 1 ITargetDetected_Left 1 "Target Detected" 0 "Target Not Detected" ;
+VAL_ 0 ITargetDetected_Right 1 "Target Detected" 0 "Target Not Detected" ;
+

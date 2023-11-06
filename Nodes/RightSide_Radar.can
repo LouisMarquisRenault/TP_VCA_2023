@@ -1,0 +1,28 @@
+/*@!Encoding:1252*/
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+  message RRRS_01 side_radar_right;
+ msTimer sendSideRadarFrame_right; 
+}
+
+on start{
+  side_radar_right.can = 1;
+  side_radar_right.dir = 1;
+  side_radar_right.rtr = 0;
+  setTimerCyclic(sendSideRadarFrame_right,100);
+}
+
+on signal CAN1::RRRS::RRRS_01::ITargetDetected_Right {
+  side_radar_right.ITargetDetected_Right = this;
+}
+on timer sendSideRadarFrame_right{
+  output(side_radar_right);
+}
+
+

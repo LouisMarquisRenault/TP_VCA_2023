@@ -1,0 +1,60 @@
+/*@!Encoding:1252*/
+includes
+{
+
+}
+
+variables
+{
+  int signal_value_ivi;
+  message OSE_01 OSE_01;
+  msTimer send_OSE_01; 
+}
+
+on start{
+  OSE_01.can = 3;
+  OSE_01.dir = 1;
+  OSE_01.rtr = 0;
+  setTimerCyclic(send_OSE_01,50);
+}
+
+on message IVIInfo_01 {
+  signal_value_ivi = $CAN2::CGW::IVIInfo_01::IOSE_Activation_Switch;
+  if (signal_value_ivi)
+     OSE_01.IOSE_ActivationState = 1;
+  else
+    OSE_01.IOSE_ActivationState = 0;
+}
+
+on message RRRS_01 {
+  signal_value_ivi = $CAN1::RRRS::RRRS_01::ITargetDetected_Right;
+  if (signal_value_ivi){
+     OSE_01.ILockRightSide = 1;
+     OSE_01.IRight_Alert = 1;
+  }
+  else{
+     OSE_01.ILockRightSide = 0;
+     OSE_01.IRight_Alert = 0;
+  }
+}
+
+on message RLRS_01 {
+  signal_value_ivi = $CAN1::RLRS::RLRS_01::ITargetDetected_Left;
+  if (signal_value_ivi){
+     OSE_01.ILockLeftSide = 1;
+     OSE_01.ILeft_Alert = 1;
+  }
+  else{
+     OSE_01.ILockLeftSide = 0;
+     OSE_01.ILeft_Alert = 0;
+  }
+}
+
+
+on signal CAN3::OSE_01::IOSE_ActivationState {
+  OSE_01.IOSE_ActivationState = this;
+}
+
+on timer send_OSE_01{
+  output(OSE_01);
+}

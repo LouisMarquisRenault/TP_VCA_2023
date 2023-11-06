@@ -1,0 +1,9 @@
+/*@!Encoding:1252*/
+
+void Start_Vehicle(){
+
+}
+
+void Shutdown_Vehicle(){
+
+}
